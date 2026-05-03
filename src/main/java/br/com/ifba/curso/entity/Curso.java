@@ -21,7 +21,7 @@ public class Curso {
     
     private String nome;
     private int quantidadeAlunos; 
-    private String cargaHoraria;
+    private int cargaHoraria;
     private String professor;
 
     public Curso() {
@@ -51,13 +51,14 @@ public class Curso {
         this.quantidadeAlunos = quantidadeAlunos;
     }
 
-    public String getCargaHoraria() {
+    public int getCargaHoraria() {
         return cargaHoraria;
     }
 
-    public void setCargaHoraria(String cargaHoraria) {
+    public void setCargaHoraria(int cargaHoraria) {
         this.cargaHoraria = cargaHoraria;
     }
+
 
     public String getProfessor() {
         return professor;

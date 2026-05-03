@@ -4,6 +4,12 @@
  */
 package br.com.ifba.curso.view;
 
+import br.com.ifba.curso.entity.Curso;
+import br.com.ifba.curso.gerenciador.GerenciadorCurso;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author evand
@@ -17,8 +23,9 @@ public class CursoListar extends javax.swing.JFrame {
      */
     public CursoListar() {
         initComponents();
+        atualizarTabela();
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -29,26 +36,32 @@ public class CursoListar extends javax.swing.JFrame {
     private void initComponents() {
 
         panel1 = new java.awt.Panel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        txtProcurar = new javax.swing.JTextField();
+        btnNovo = new javax.swing.JButton();
+        scpCursos = new javax.swing.JScrollPane();
+        tblCursos = new javax.swing.JTable();
+        lblProcurar = new javax.swing.JLabel();
+        lblNovoCurso = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         panel1.setBackground(new java.awt.Color(34, 47, 132));
 
-        jTextField1.setBackground(new java.awt.Color(49, 53, 82));
-        jTextField1.setForeground(new java.awt.Color(255, 255, 255));
+        txtProcurar.setBackground(new java.awt.Color(49, 53, 82));
+        txtProcurar.setForeground(new java.awt.Color(255, 255, 255));
+        txtProcurar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtProcurarKeyReleased(evt);
+            }
+        });
 
-        jButton1.setBackground(new java.awt.Color(0, 51, 51));
-        jButton1.setFont(new java.awt.Font("Arial Black", 0, 24)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(0, 153, 0));
-        jButton1.setText("+");
+        btnNovo.setBackground(new java.awt.Color(0, 51, 51));
+        btnNovo.setFont(new java.awt.Font("Arial Black", 0, 24)); // NOI18N
+        btnNovo.setForeground(new java.awt.Color(0, 153, 0));
+        btnNovo.setText("+");
+        btnNovo.addActionListener(this::btnNovoActionPerformed);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblCursos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
@@ -59,15 +72,20 @@ public class CursoListar extends javax.swing.JFrame {
                 "NOME", "CARGA HORÁRIA", "QTD. ALUNOS", "PROFESSOR", "REMOVER", "EDITAR"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        tblCursos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblCursosMouseClicked(evt);
+            }
+        });
+        scpCursos.setViewportView(tblCursos);
 
-        jLabel1.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("PROCURAR");
+        lblProcurar.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
+        lblProcurar.setForeground(new java.awt.Color(255, 255, 255));
+        lblProcurar.setText("PROCURAR");
 
-        jLabel2.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("NOVO CURSO");
+        lblNovoCurso.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
+        lblNovoCurso.setForeground(new java.awt.Color(255, 255, 255));
+        lblNovoCurso.setText("NOVO CURSO");
 
         javax.swing.GroupLayout panel1Layout = new javax.swing.GroupLayout(panel1);
         panel1.setLayout(panel1Layout);
@@ -79,16 +97,16 @@ public class CursoListar extends javax.swing.JFrame {
                         .addContainerGap()
                         .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panel1Layout.createSequentialGroup()
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtProcurar, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(207, 207, 207)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(panel1Layout.createSequentialGroup()
-                                .addComponent(jLabel1)
+                                .addComponent(lblProcurar)
                                 .addGap(432, 432, 432)
-                                .addComponent(jLabel2))))
+                                .addComponent(lblNovoCurso))))
                     .addGroup(panel1Layout.createSequentialGroup()
                         .addGap(27, 27, 27)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 997, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(scpCursos, javax.swing.GroupLayout.PREFERRED_SIZE, 997, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(29, Short.MAX_VALUE))
         );
         panel1Layout.setVerticalGroup(
@@ -96,14 +114,14 @@ public class CursoListar extends javax.swing.JFrame {
             .addGroup(panel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2))
+                    .addComponent(lblProcurar)
+                    .addComponent(lblNovoCurso))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtProcurar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(32, 32, 32)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 443, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(scpCursos, javax.swing.GroupLayout.PREFERRED_SIZE, 443, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
@@ -120,6 +138,80 @@ public class CursoListar extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
+        CursoSave telaCadastro = new CursoSave();
+        telaCadastro.setVisible(true);
+    
+    this.atualizarTabela();
+    }//GEN-LAST:event_btnNovoActionPerformed
+
+    private void tblCursosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCursosMouseClicked
+
+        int linha = tblCursos.getSelectedRow();
+        int coluna = tblCursos.getSelectedColumn();
+
+        if (linha != -1) {
+            try {
+                GerenciadorCurso gerenciador = new GerenciadorCurso();
+                List<Curso> lista = gerenciador.listarTodos();
+                Curso cursoSelecionado = lista.get(linha);
+
+        if (coluna == 4) { 
+            int resposta = JOptionPane.showConfirmDialog(this, "Deseja realmente remover o curso de " + cursoSelecionado.getNome() + "?", "Confirmação", JOptionPane.YES_NO_OPTION);
+            
+            if (resposta == JOptionPane.YES_OPTION) {
+                gerenciador.remover(cursoSelecionado.getId());
+                atualizarTabela();
+                JOptionPane.showMessageDialog(this, "Curso removido com sucesso!");
+            }
+            
+        } else if (coluna == 5) { 
+            JOptionPane.showMessageDialog(this, "Você clicou para editar o curso: " + cursoSelecionado.getNome());
+            CursoSave telaEdicao = new CursoSave();
+            telaEdicao.preencherParaEdicao(cursoSelecionado);
+            telaEdicao.setVisible(true);
+            this.dispose();
+        }
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Erro na operação: " + e.getMessage());
+    }
+}
+    }//GEN-LAST:event_tblCursosMouseClicked
+
+    private void txtProcurarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtProcurarKeyReleased
+        String termo = txtProcurar.getText();
+
+        try {
+            GerenciadorCurso gerenciador = new GerenciadorCurso();
+            List<Curso> lista;
+
+            if (termo.trim().isEmpty()) {
+                lista = gerenciador.listarTodos();
+            } else {
+                lista = gerenciador.buscarPorNome(termo);
+            }
+
+            DefaultTableModel modelo = (DefaultTableModel) tblCursos.getModel();
+            modelo.setNumRows(0);
+
+            for (Curso c : lista) {
+                modelo.addRow(new Object[]{
+                    c.getNome(),
+                    c.getCargaHoraria(),
+                    c.getQuantidadeAlunos(),
+                    c.getProfessor(),
+                    "Remover",
+                    "Editar"
+                });
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Erro ao pesquisar: " + e.getMessage());
+        }
+        
+    }//GEN-LAST:event_txtProcurarKeyReleased
 
     /**
      * @param args the command line arguments
@@ -147,12 +239,36 @@ public class CursoListar extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JButton btnNovo;
+    private javax.swing.JLabel lblNovoCurso;
+    private javax.swing.JLabel lblProcurar;
     private java.awt.Panel panel1;
+    private javax.swing.JScrollPane scpCursos;
+    private javax.swing.JTable tblCursos;
+    private javax.swing.JTextField txtProcurar;
     // End of variables declaration//GEN-END:variables
+
+    public void atualizarTabela() {
+    try {
+        GerenciadorCurso gerenciador = new GerenciadorCurso();
+        List<Curso> lista = gerenciador.listarTodos();
+
+        DefaultTableModel modelo = (DefaultTableModel) tblCursos.getModel();
+        modelo.setNumRows(0);
+
+        for (Curso c : lista) {
+            modelo.addRow(new Object[]{
+                c.getNome(),
+                c.getCargaHoraria(),
+                c.getQuantidadeAlunos(),
+                c.getProfessor(),
+                "Remover",
+                "Editar"
+            });
+        }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Erro ao carregar os dados: " + e.getMessage());
+    }
+}
+
 }
