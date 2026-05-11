@@ -4,3 +4,5 @@ br\com\ifba\curso\view\CursoListar.class
 br\com\ifba\curso\view\CursoListar$1.class
 br\com\ifba\curso\view\CursoSave.class
 br\com\ifba\curso\entity\Curso.class
+br\com\ifba\curso\dao\CursoDAO.class
+br\com\ifba\curso\dao\CursoDAOImpl.class

@@ -5,7 +5,8 @@
 package br.com.ifba.curso.view;
 
 import br.com.ifba.curso.entity.Curso;
-import br.com.ifba.curso.gerenciador.GerenciadorCurso;
+import br.com.ifba.curso.dao.CursoDAO;
+import br.com.ifba.curso.dao.CursoDAOImpl;
 import javax.swing.JOptionPane;
 
 /**
@@ -183,7 +184,7 @@ public class CursoSave extends javax.swing.JFrame {
         curso.setProfessor(txtProfessor.getText());
 
         try {
-            GerenciadorCurso gerenciador = new GerenciadorCurso();
+            CursoDAO gerenciador = new CursoDAOImpl();
             gerenciador.salvar(curso);
     
             JOptionPane.showMessageDialog(this, "Salvo com sucesso!");

@@ -5,7 +5,8 @@
 package br.com.ifba.curso.view;
 
 import br.com.ifba.curso.entity.Curso;
-import br.com.ifba.curso.gerenciador.GerenciadorCurso;
+import br.com.ifba.curso.dao.CursoDAO;
+import br.com.ifba.curso.dao.CursoDAOImpl;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -153,7 +154,7 @@ public class CursoListar extends javax.swing.JFrame {
 
         if (linha != -1) {
             try {
-                GerenciadorCurso gerenciador = new GerenciadorCurso();
+                CursoDAO gerenciador = new CursoDAOImpl();
                 List<Curso> lista = gerenciador.listarTodos();
                 Curso cursoSelecionado = lista.get(linha);
 
@@ -184,7 +185,7 @@ public class CursoListar extends javax.swing.JFrame {
         String termo = txtProcurar.getText();
 
         try {
-            GerenciadorCurso gerenciador = new GerenciadorCurso();
+            CursoDAO gerenciador = new CursoDAOImpl();
             List<Curso> lista;
 
             if (termo.trim().isEmpty()) {
@@ -250,7 +251,7 @@ public class CursoListar extends javax.swing.JFrame {
 
     public void atualizarTabela() {
     try {
-        GerenciadorCurso gerenciador = new GerenciadorCurso();
+        CursoDAO gerenciador = new CursoDAOImpl();
         List<Curso> lista = gerenciador.listarTodos();
 
         DefaultTableModel modelo = (DefaultTableModel) tblCursos.getModel();
