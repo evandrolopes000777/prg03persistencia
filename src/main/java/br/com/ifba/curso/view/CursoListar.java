@@ -5,8 +5,8 @@
 package br.com.ifba.curso.view;
 
 import br.com.ifba.curso.entity.Curso;
-import br.com.ifba.curso.dao.CursoDAO;
-import br.com.ifba.curso.dao.CursoDAOImpl;
+import br.com.ifba.curso.controller.CursoController;
+import br.com.ifba.curso.controller.ICursoController;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -154,15 +154,15 @@ public class CursoListar extends javax.swing.JFrame {
 
         if (linha != -1) {
             try {
-                CursoDAO gerenciador = new CursoDAOImpl();
-                List<Curso> lista = gerenciador.listarTodos();
+                ICursoController controller = new CursoController();
+                List<Curso> lista = controller.listarTodos();
                 Curso cursoSelecionado = lista.get(linha);
 
         if (coluna == 4) { 
             int resposta = JOptionPane.showConfirmDialog(this, "Deseja realmente remover o curso de " + cursoSelecionado.getNome() + "?", "Confirmação", JOptionPane.YES_NO_OPTION);
             
             if (resposta == JOptionPane.YES_OPTION) {
-                gerenciador.remover(cursoSelecionado.getId());
+                controller.removerCurso(cursoSelecionado);
                 atualizarTabela();
                 JOptionPane.showMessageDialog(this, "Curso removido com sucesso!");
             }
@@ -185,13 +185,13 @@ public class CursoListar extends javax.swing.JFrame {
         String termo = txtProcurar.getText();
 
         try {
-            CursoDAO gerenciador = new CursoDAOImpl();
+            ICursoController controller = new CursoController();
             List<Curso> lista;
 
             if (termo.trim().isEmpty()) {
-                lista = gerenciador.listarTodos();
+                lista = controller.listarTodos();
             } else {
-                lista = gerenciador.buscarPorNome(termo);
+                lista = controller.buscarPorNome(termo);
             }
 
             DefaultTableModel modelo = (DefaultTableModel) tblCursos.getModel();
@@ -251,8 +251,8 @@ public class CursoListar extends javax.swing.JFrame {
 
     public void atualizarTabela() {
     try {
-        CursoDAO gerenciador = new CursoDAOImpl();
-        List<Curso> lista = gerenciador.listarTodos();
+        ICursoController controller = new CursoController();
+        List<Curso> lista = controller.listarTodos();
 
         DefaultTableModel modelo = (DefaultTableModel) tblCursos.getModel();
         modelo.setNumRows(0);
