@@ -5,15 +5,17 @@ import br.com.ifba.curso.dao.CursoDAOImpl;
 import br.com.ifba.curso.entity.Curso;
 import br.com.ifba.curso.util.StringUtil;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class CursoService implements ICursoService {
     
-    // Instancia o DAO para conversar com o banco
-    private CursoDAO cursoDAO = new CursoDAOImpl();
+    @Autowired
+    private CursoDAO cursoDAO;
 
     @Override
     public void salvarCurso(Curso curso) throws Exception {
-        // Regra de Negócio: Valida se o nome está vazio usando nossa classe StringUtil
         if (StringUtil.isNullOrEmpty(curso.getNome())) {
             throw new Exception("O nome do curso não pode estar vazio!");
         }

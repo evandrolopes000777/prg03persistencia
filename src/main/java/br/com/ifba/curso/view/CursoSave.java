@@ -184,7 +184,7 @@ public class CursoSave extends javax.swing.JFrame {
         curso.setProfessor(txtProfessor.getText());
 
         try {
-            ICursoController controller = new CursoController();
+            ICursoController controller = br.com.ifba.curso.util.SpringContext.getContext().getBean(ICursoController.class);
             controller.salvarCurso(curso);
     
             JOptionPane.showMessageDialog(this, "Salvo com sucesso!");

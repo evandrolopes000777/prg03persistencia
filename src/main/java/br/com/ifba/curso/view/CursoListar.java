@@ -154,7 +154,7 @@ public class CursoListar extends javax.swing.JFrame {
 
         if (linha != -1) {
             try {
-                ICursoController controller = new CursoController();
+                ICursoController controller = br.com.ifba.curso.util.SpringContext.getContext().getBean(ICursoController.class);
                 List<Curso> lista = controller.listarTodos();
                 Curso cursoSelecionado = lista.get(linha);
 
@@ -185,7 +185,7 @@ public class CursoListar extends javax.swing.JFrame {
         String termo = txtProcurar.getText();
 
         try {
-            ICursoController controller = new CursoController();
+            ICursoController controller = br.com.ifba.curso.util.SpringContext.getContext().getBean(ICursoController.class);
             List<Curso> lista;
 
             if (termo.trim().isEmpty()) {
@@ -251,7 +251,7 @@ public class CursoListar extends javax.swing.JFrame {
 
     public void atualizarTabela() {
     try {
-        ICursoController controller = new CursoController();
+        ICursoController controller = br.com.ifba.curso.util.SpringContext.getContext().getBean(ICursoController.class);
         List<Curso> lista = controller.listarTodos();
 
         DefaultTableModel modelo = (DefaultTableModel) tblCursos.getModel();

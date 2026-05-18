@@ -4,11 +4,14 @@ import br.com.ifba.curso.entity.Curso;
 import br.com.ifba.curso.service.CursoService;
 import br.com.ifba.curso.service.ICursoService;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
+@Controller
 public class CursoController implements ICursoController {
     
-    // Instancia o Service para mandar as ações da tela para lá
-    private ICursoService cursoService = new CursoService();
+    @Autowired
+    private ICursoService cursoService;
 
     @Override
     public void salvarCurso(Curso curso) throws Exception {

@@ -3,7 +3,9 @@ package br.com.ifba.curso.dao;
 import br.com.ifba.curso.entity.Curso;
 import java.util.List;
 import javax.persistence.EntityManager;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class CursoDAOImpl extends GenericDao<Curso> implements CursoDAO {
     
     // salvar, remover e listarTodos estão no GenericDao
